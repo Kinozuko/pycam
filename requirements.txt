@@ -1,0 +1,9 @@
+numpy
+opencv-python
+Pillow
+flask
+Werkzeug
+Flask-WTF
+WTForms
+mysqlclient
+paramiko
