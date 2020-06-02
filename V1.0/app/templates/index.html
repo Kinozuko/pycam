@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Bienvenido {{ user}}!</h1>
+
+    <hr>
+    
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.fecha.label }}
+            {{ form.fecha(size=32) }}
+            {{ form.submit }}
+            {% for error in form.fecha.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+    </form>
+
+    <h3> Control de registro para la fecha {{ date }}</h3>
+
+    <table>
+    	<thead>
+    		<tr>
+    			<th> Cedula </th>
+    			<th> Nombre </th>
+    			<th> Vigilancia de Entrada </th>
+    			<th> Vigilancia de Salida </th>
+    			<th> Hora de Ingreso </th>
+    			<th> Hora de Salida </th>
+    			<th> Equipos </th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    		{% for item in history %}
+    			<tr>
+    				<th> {{ item[0] }}</th>
+    				<th> {{ item[1] }} {{ item[2] }}</th>
+    				<th> {{ item[3] }}</th>
+    				<th> 
+    					{% if item[6] %}	
+    						{{ item[4] }}
+    					{% else %}
+    						Sin registrar
+    					{% endif %}
+    				</th>
+    				<th> {{ item [5] }}</th>
+    				<th> 
+    					{% if item[6] %}	
+    						{{ item[6] }}
+    					{% else %}
+    						Sin registrar
+    					{% endif %}
+    				</th>
+    				<th> 
+    					{% if item[7] %}
+    						{{ item[7] }}
+    					{% else %}
+    						No posee
+    					{% endif %}
+    				</th>
+    			</tr>
+    		{% endfor %}
+    	</tbody>
+    </table>
+{% endblock %}

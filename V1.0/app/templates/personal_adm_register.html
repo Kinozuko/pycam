@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+     <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.nombre.label }}<br>
+            {{ form.nombre(size=32) }}<br>
+            {% for error in form.nombre.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.apellido.label }}<br>
+            {{ form.apellido(size=32) }}<br>
+            {% for error in form.apellido.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.cedula.label }}<br>
+            {{ form.cedula(size=32) }}<br>
+            {% for error in form.cedula.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.costo_hora.label }}<br>
+            {{ form.costo_hora(size=32) }}<br>
+            {% for error in form.costo_hora.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    <form>
+{% endblock %}

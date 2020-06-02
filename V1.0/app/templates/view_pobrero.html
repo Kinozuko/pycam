@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Bienvenido {{ user}}!</h1>
+    <hr>
+    <h3> Registro del Personal Obrero </h3>
+    <table>
+    	<thead>
+    		<tr>
+    			<th> Cedula </th>
+    			<th> Nombre </th>
+                <th> Sueldo </th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    		{% for item in history %}
+    			<tr>
+    				<th> {{ item[0] }}</th>
+    				<th> {{ item[1] }} {{ item[2] }}</th>
+    				<th> {{ item[3] }} </th>
+    			</tr>
+    		{% endfor %}
+    	</tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,162 @@
+<html>
+    <head>
+        <title>PyCam System Security</title>
+    </head>
+    <style type="text/css">
+        table{
+            border-collapse: collapse;
+            border-spacing: 0px;
+        }
+        table, th, td{
+            padding: 5px;
+            border: 1px solid black;
+        }
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .navbar a {
+            float: left;
+            font-size: 16px;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .dropdown {
+            float: left;
+            overflow: hidden;
+        }
+
+        .dropdown .dropbtn {
+            font-size: 16px;    
+            border: none;
+            outline: none;
+            color: white;
+            padding: 14px 16px;
+            background-color: inherit;
+            font-family: inherit;
+            margin: 0;
+        }
+
+        .navbar a:hover, .dropdown:hover .dropbtn {
+            background-color: red;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            float: none;
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+    <body>
+    	<div>
+        	<h1>PSS {% if session['user_type'] %} - {% if session['user_type'] == 'Adiministrador' %} Administrador {% else %} {{ session['user_type'] }} {% endif %} {% endif %}</h1>
+            <hr>
+            <div class="navbar">
+
+                {% if session['is_aunthenticate'] %}
+
+                    <div class="dropdown">
+                        <button class="dropbtn"><b> Inicio </b><i class="fa fa-caret-down"></i></button>
+                        <div class="dropdown-content">
+                            {% if session['user_type'] == 'Adiministrador' %}
+                            <a href="{{ url_for('view_users') }}"> Usuarios</a>
+                            {% endif %}
+                            {% if session['user_type'] == 'Registro' or session['user_type'] == 'Adiministrador'%}
+                            <a href="{{ url_for('view_students') }}" > Estudiantes</a>
+                            <a href="{{ url_for('view_padm') }}"> Personal Administrativo</a>
+                            <a href="{{ url_for('view_pobrero') }}"> Personal Obrero</a>
+                            {% endif %}
+                            {% if session['user_type'] == 'Vigilancia' or session['user_type'] == 'Adiministrador'%}
+                            <a href="{{ url_for('index') }}"> Control de Registro</a>
+                            <a href="{{ url_for('view_guest') }}"> Control de Registro de Visitantes</a>
+                            {% endif %}
+                            <a href="{{ url_for('logout') }}"> Cerrar Sesion</a>
+                        </div>
+                    </div>
+
+                    {% if session['user_type'] == 'Adiministrador' %}
+
+                    <div class="dropdown">
+                        <button class="dropbtn"><b> Camaras </b><i class="fa fa-caret-down"></i></button>
+                        <div class="dropdown-content">
+                            <a href="http://127.0.0.1:5000/video_feed.mjpg" target="_blank"> Camara Salida</a>
+                            <a href="http://127.0.0.1:5000/video_feed_2.mjpg" target="_blank"> Camara Entrada</a>
+                        </div>
+                    </div>
+
+                    {% endif %}
+
+                    <div class="dropdown">
+                        <button class="dropbtn"><b> Registrar </b><i class="fa fa-caret-down"></i></button>
+                        <div class="dropdown-content">
+
+                            {% if session['user_type'] == 'Adiministrador' %}
+                            <a href="{{ url_for('user_register') }}"> Registrar Usuario</a>
+                            {% endif %}
+
+                            {% if session['user_type'] == 'Registro' or session['user_type'] == 'Adiministrador' %}
+
+                            <a href="{{ url_for('student_register') }}"> Registrar Estudiante</a>
+                            <a href="{{ url_for('personal_adm_register') }}"> Registrar Personal Administrativo</a>
+                            <a href="{{ url_for('personal_register') }}"> Registrar Personal Obrero</a>
+                            {% endif %}
+
+                            {% if session['user_type'] == 'Vigilancia' or session['user_type'] == 'Adiministrador' %}
+
+                            <a href="{{ url_for('add_item') }}">Registrar Equipo</a>
+                            <a href="{{ url_for('guest') }}">Registrar Invitado</a>
+                            <a href="{{ url_for('check_guest') }}">Registrar Salida de Invitado</a>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                    {% if session['user_type'] == 'Adiministrador' %}
+
+                    <b><a href="{{ url_for('train') }}"> Crear Reconocimiento</a></b>
+
+                    {% endif %}
+                {%else %}
+                <a href="/"> Iniciar Sesion</a>
+                {% endif %}
+
+            </div>
+        </div>
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {%block content %} {% endblock %}
+    </body>
+</html>
